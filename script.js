@@ -113,36 +113,34 @@ function displayVideoDetections(detections) {
             "Confidence: " +
             Math.round(parseFloat(detection.categories[0].score) * 100) +
             "% .";
-        p.style =
-            "left: " +
-            (video.offsetWidth -
-                detection.boundingBox.width -
-                detection.boundingBox.originX) +
-            "px;" +
-            "top: " +
-            (detection.boundingBox.originY - 30) +
-            "px; " +
-            "width: " +
-            (detection.boundingBox.width - 10) +
-            "px;";
+        p.style = "text-align: center; margin-top: 10px; border-radius: 5px;";
+        //     "left: " +
+        //     (video.offsetWidth -
+        //         detection.boundingBox.width -
+        //         detection.boundingBox.originX) +
+        //     "px;" +
+        //     "top: " +
+        //     (detection.boundingBox.originY - 30) +
+        //     "px; " +
+        //     "width: " +
+        //     (detection.boundingBox.width - 10) +
+        //     "px;";
 
         const highlighter = document.createElement("div");
         highlighter.setAttribute("class", "highlighter");
         highlighter.style =
             "left: " +
-            (video.offsetWidth -
-                detection.boundingBox.width -
-                detection.boundingBox.originX) +
-            "px;" +
+            (detection.boundingBox.originX / 6) +
+            "%;" +
             "top: " +
-            detection.boundingBox.originY +
-            "px;" +
+            (detection.boundingBox.originY / 6) +
+            "%;" +
             "width: " +
-            (detection.boundingBox.width - 10) +
-            "px;" +
+            ((detection.boundingBox.width - 10) / 7.5) +
+            "%;" +
             "height: " +
-            detection.boundingBox.height +
-            "px;";
+            (detection.boundingBox.height / 6) +
+            "%;";
 
         liveView.appendChild(highlighter);
         liveView.appendChild(p);
@@ -150,6 +148,7 @@ function displayVideoDetections(detections) {
         // Store drawn objects in memory so they are queued to delete at next call
         children.push(highlighter);
         children.push(p);
+
         // for (let keypoint of detection.keypoints) {
         //     const keypointEl = document.createElement("spam");
         //     keypointEl.className = "key-point";
@@ -159,6 +158,7 @@ function displayVideoDetections(detections) {
         //     liveView.appendChild(keypointEl);
         //     children.push(keypointEl);
         // }
+
         for (let i = 0; i < detection.keypoints.length; i++) {
             const keypoint = detection.keypoints[i];
             const keypointEl = document.createElement("spam");
@@ -169,7 +169,8 @@ function displayVideoDetections(detections) {
             children.push(keypointEl);
         }
 
-        console.log(`X = ${detection.keypoints[2].y * video.offsetHeight - 3}, X = ${video.offsetWidth - detection.keypoints[2].x * video.offsetWidth - 3}`)
-        console.log(detection.keypoints)
+        // console.log(`X = ${detection.keypoints[2].y * video.offsetHeight - 3}, X = ${video.offsetWidth - detection.keypoints[2].x * video.offsetWidth - 3}`)
+        console.log(`H = ${video.offsetHeight}, W = ${video.offsetWidth}`)
+        console.log(`BX = ${detection.boundingBox.originX}, BY = ${detection.boundingBox.originY}`)
     }
 }
